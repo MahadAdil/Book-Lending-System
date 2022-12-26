@@ -92,6 +92,22 @@ void createEntry()
 
     FILE *filePtr;
     filePtr = fopen("records.txt", "a+");
+
+    char singleLine[200];
+
+    int test;
+
+    while(fgets(singleLine, 200, filePtr) != NULL) {
+        test = checkId(singleLine, lendingRec.lenderId);
+
+        if(test == 0) {
+            printf("This member has to return the previous book to lend a new one.\n");
+            printf("Pending Return: %s\n", singleLine);
+            fclose(filePtr);
+            return;
+        }
+    }
+
     fprintf(filePtr, "%s, %s, %s, %s\n", lendingRec.lenderId, lendingRec.bookName, lendingRec.lenderFullName, lendingRec.lendingDate);
     fclose(filePtr);
 }
